@@ -1,0 +1,56 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.registration {
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  justify-content: center;
+  align-items: center;  
+}
+.login{
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  justify-content: center;
+  align-items: center;  
+}
+.registration input, .login input{
+  width:300px;
+  height: 50px;
+  font-size: 20px;
+  padding-left: 10px;
+  margin:5px;
+}
+
+
+
+button{
+  width:300px;
+  height: 50px;
+  font-size: 20px;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.registration label,.login label{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  margin:5px;
+}
+
