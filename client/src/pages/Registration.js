@@ -1,7 +1,7 @@
 import '../App.css';
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { Link } from 'react-router-dom';
+// eslint-disable-next-line
 import { Navigate } from 'react-router-dom';
 
 export default function Registration(props) {
@@ -12,9 +12,11 @@ export default function Registration(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [loginStatus, setLoginStatus] = useState("");
+    const [loginStatus, setLoginStatus] = useState(false);
+    const [message, setMessage] = useState("");
     const [color, setColor] = useState("red");
 
+    // eslint-disable-next-line
     const [redirect, setRedirect] = useState("false");
     Axios.defaults.withCredentials = true;
 
@@ -34,37 +36,59 @@ export default function Registration(props) {
             password: password
         }).then((response) => {
             // console.log(response);
-            if (response.data.message) {
-                setLoginStatus(response.data.message);
+            if (!response.data.auth) {
+                setMessage(response.data.message);
+                setLoginStatus(false);
                 setColor("red");
             } else {
-                setLoginStatus(response.data[0].Username + " is logged in");
+                //console.log(response.data);
+                setMessage(response.data.result[0].Username + " is logged in");
+
+                localStorage.setItem("token", response.data.token);
+                setLoginStatus(true);
                 setColor("green");
                 setTimeout(() => {
                     setRedirect("true");
-                }, 2000);               
+                }, 2000);
             }
         });
     };
 
+    const userAuthenticated = () => {
+        Axios.get('http://localhost:3001/isUserAuth', {
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            },
+
+        }).then((response) => {
+            // console.log(response);
+            alert(response.data);
+        });
+
+    };
+
+
     useEffect(() => {
-        
+
         Axios.get('http://localhost:3001/login').then((response) => {
             if (response.data.loggedIn === true) {
-                setLoginStatus(response.data.user[0].Username + " is logged in");
+                setLoginStatus(true);
+                setMessage(response.data.user[0].Username + " is logged in");
                 setColor("green");
                 setTimeout(() => {
                     setRedirect("true");
-                }, 2000); 
+                }, 2000);
             }
         });
     }, []);
 
 
 
+
+
     return (
         // (redirect === "true" && (
-        //     <Navigate to="/" />
+        //     <Navigate to="/Main" />
         // )) ||
         <div className="App">
             <div className="registration">
@@ -92,10 +116,20 @@ export default function Registration(props) {
             </div>
 
 
-            <h1 style={{ color }}>{loginStatus}</h1>
-         
+            {loginStatus && (
+                <button style={{ background: '#4c99af' }}
+                    onClick={userAuthenticated}
+                > Check if Authenticated</button>
+            )}
+            {/* {
+                redirect === "true" && <Navigate to="/Main" />
+            } */}
+
+
+            <h1 style={{ color }}>{message}</h1>
+
         </div>
-     
-    
+
+
     )
 }

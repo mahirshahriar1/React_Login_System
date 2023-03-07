@@ -12,8 +12,8 @@ function App() {
     <Router>
       <Routes>
 
-        <Route exact path='/registration' element={<Registration/>} />(" ")
-        <Route exact path='/' element={<Main/>} />
+        <Route exact path='/' element={<Registration/>} />(" ")
+        <Route exact path='/Main' element={<Main/>} />
       </Routes>
     </Router>
   );
