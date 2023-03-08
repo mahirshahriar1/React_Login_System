@@ -95,6 +95,12 @@ export default function Registration(props) {
         setMessage("Logged out");
     };
 
+    const goto = () => {
+      
+        window.location.href='/Main';
+  
+    }
+
 
     return (
         // (redirect === "true" && (
@@ -130,7 +136,12 @@ export default function Registration(props) {
                 <div>  
                     <button style={{ background: '#4c99af' }}onClick={userAuthenticated}> Check if Authenticated</button>
                     <br />
+                    <button   style={{ background: '#4c99af' }} onClick={goto}  >
+                        Check Role </button>
+                    <br />
                     <button style={{ background: '#bd1d1d' }} onClick={logout}>Logout</button>
+                    
+
                 </div>
                
 
