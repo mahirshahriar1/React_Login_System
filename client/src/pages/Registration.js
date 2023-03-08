@@ -4,6 +4,7 @@ import Axios from 'axios';
 // eslint-disable-next-line
 import { Navigate } from 'react-router-dom';
 
+
 export default function Registration(props) {
 
     const [usernameReg, setUsernameReg] = useState("");
@@ -83,7 +84,16 @@ export default function Registration(props) {
     }, []);
 
 
-
+    const logout = () => {
+        Axios.get('http://localhost:3001/logout').then((response) => {
+            alert(response.data);
+        });
+        
+        localStorage.removeItem("token");
+        
+        setLoginStatus(false);
+        setMessage("Logged out");
+    };
 
 
     return (
@@ -117,9 +127,14 @@ export default function Registration(props) {
 
 
             {loginStatus && (
-                <button style={{ background: '#4c99af' }}
-                    onClick={userAuthenticated}
-                > Check if Authenticated</button>
+                <div>  
+                    <button style={{ background: '#4c99af' }}onClick={userAuthenticated}> Check if Authenticated</button>
+                    <br />
+                    <button style={{ background: '#bd1d1d' }} onClick={logout}>Logout</button>
+                </div>
+               
+
+
             )}
             {/* {
                 redirect === "true" && <Navigate to="/Main" />
@@ -127,6 +142,7 @@ export default function Registration(props) {
 
 
             <h1 style={{ color }}>{message}</h1>
+
 
         </div>
 

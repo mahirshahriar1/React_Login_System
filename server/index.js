@@ -10,7 +10,7 @@ const session = require('express-session');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+ 
 
 const jwt = require('jsonwebtoken');
 
@@ -97,6 +97,12 @@ app.get('/login', (req, res) => {
         // console.log('not logged in');
         res.send({ loggedIn: false });
     }
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();     
+
+    res.send('logged out');
 });
 
 
